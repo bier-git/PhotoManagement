@@ -1,4 +1,4 @@
-<% if @photo.download_date == nil || Date.current < @photo.download_date + 365.days %>
+    <% if @photo.download_date == nil || Date.current < @photo.download_date + 365.days %>
 
 <div class="container"> 
         <% @photo.photos.each do |image| %>
