@@ -45,14 +45,14 @@ class PhotosController < ApplicationController
     def create
         @photo = Photo.create(photo_params.merge({download_date: Date.current, delete_date: (Date.current + 1.year)}))
         @photo.update(download_date: Date.current, delete_date: (Date.current + 1.year))
-        redirect_to @photo
+        redirect_to "/folders"
     end
 
     private
 
     def photo_params
 
-        params.require(:photo).permit(:shooting_date, :photographer_id, :search, :tag_list, :tag, { tag_ids: [] }, :tag_ids, permissions: [], photos: [])
+        params.require(:photo).permit(:shooting_date, :folder_id, :photographer_id, :search, :tag_list, :tag, { tag_ids: [] }, :tag_ids, permissions: [], photos: [])
 
     end
 

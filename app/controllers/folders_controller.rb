@@ -5,6 +5,8 @@ class FoldersController < ApplicationController
       
     def show 
         @folder = Folder.find(params[:id]) 
+        @sub_folders = @folder.children
+        @sub_files = @folder.photos.where(folder_id: "#{params[:id]}")
     end
     
     def new
