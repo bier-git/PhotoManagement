@@ -1,6 +1,29 @@
-<% @sub_folders.each do |folder| %>
-    <%= link_to folder.name, folder_path(folder) %>
-<% end %>
+<div class="container"> 
+    <div class="col-4">
+        <h1>Folders</h1>
+    </div>                   
+    <% @sub_folders.each do |folder| %>
+            <ul class="list-unstyled row">
+                        <li class="list-item col-sm-1">
+                            <svg class="bi bi-folder-symlink" width="30" height="30" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9.828 4a3 3 0 01-2.12-.879l-.83-.828A1 1 0 006.173 2H2.5a1 1 0 00-1 .981L1.546 4h-1L.5 3a2 2 0 012-2h3.672a2 2 0 011.414.586l.828.828A2 2 0 009.828 3v1z"/>
+                                <path fill-rule="evenodd" d="M13.81 4H2.19a1 1 0 00-.996 1.09l.637 7a1 1 0 00.995.91h10.348a1 1 0 00.995-.91l.637-7A1 1 0 0013.81 4zM2.19 3A2 2 0 00.198 5.181l.637 7A2 2 0 002.826 14h10.348a2 2 0 001.991-1.819l.637-7A2 2 0 0013.81 3H2.19z" clip-rule="evenodd"/>
+                                <path d="M8.616 10.24l3.182-1.969a.443.443 0 000-.742l-3.182-1.97c-.27-.166-.616.036-.616.372V6.7c-.857 0-3.429 0-4 4.8 1.429-2.7 4-2.4 4-2.4v.769c0 .336.346.538.616.371z"/>
+                            </svg>
+                        </li>
+                        <li class="list-item col-sm-3">
+                            <%= link_to folder.name, folder_path(folder) %>
+                        </li>
+                        <li class="list-item col-sm-3">
+                            <%= "Created: #{folder.created_at.strftime("%d.%m.%Y")}" %>
+                        </li>
+                        <li class="list-item col-sm-3">
+                            <span class="badge badge-primary badge-pill">14</span>
+                        </li>
+                </ul>
+    <% end %>  
+</div>
+
 
 
 
@@ -8,16 +31,76 @@
 
 <li><%= link_to "Upload file", folder_new_sub_file_path(@folder) %></li>
 
-
-<% @sub_files.each do |file| %>
-    <p>Shooting date: <%= file.shooting_date %></p>
-    <p>Deletion date: <%= file.delete_date %></p>
-    <p>Tags: <%= raw file.tags.map(&:name).map { |t| link_to t, tag_path(t) }.join(', ') %></p>
-        <div><% file.photos.each do |attachment| %>  
-                <%= link_to attachment.filename, photo_path(file) %>
-            <% end %>
-        </div>
-<% end %>
-   
-
-   link_to (image_tag image.variant(resize: "50%", quality: 75).processed, class: "card-img-top"), photo_path(image_all)
+<div class="container"> 
+    <div class="col-4">
+        <h1>Files</h1>
+    </div>
+    <ul class="list-unstyled row">
+                        <li class="list-item col-sm-1 ">
+                        
+                        </li>
+                        <li class="list-item col-sm-1 font-weight-bold text-secondary">
+                        Select
+                        </li>                      
+                        <li class="list-item col-sm-1 font-weight-bold text-secondary">
+                        Created
+                        </li>
+                        <li class="list-item col-sm-1 font-weight-bold text-secondary">
+                        Shooting
+                        </li>
+                        <li class="list-item col-sm-1 font-weight-bold text-secondary">
+                        Used  
+                        </li>
+                        <li class="list-item col-sm-1 font-weight-bold text-secondary">
+                        Deletion
+                        </li>
+                        <li class="list-item col-sm-1 font-weight-bold text-secondary">
+                        Type
+                        </li>
+                        <li class="list-item col-sm-4 font-weight-bold text-secondary">
+                        Name    
+                        </li>
+                </ul>
+    <%= form_with url: folder_download_files_path(params[:id]), local: true do |f| %>                   
+    <% @sub_files.each do |file| %>
+            <ul class="list-unstyled row">
+                        <li class="list-item col-sm-1 ">
+                            <svg class="bi bi-files" width="30" height="30" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M3 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H3z"/>
+                            <path d="M5 0h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2v-1a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1H3a2 2 0 0 1 2-2z"/>
+                            </svg>
+                        </li>   
+                         <li class="list-item col-sm-1 ">
+                            <%= f.check_box( "selected_ids", { multiple: true },file.photos.blobs.ids) %>
+                        </li>                  
+                        <li class="list-item col-sm-1 ">
+                            <%= file.created_at.strftime("%d.%m.%Y")%>
+                        </li>
+                        <li class="list-item col-sm-1 ">
+                            <%= file.shooting_date.strftime("%d.%m.%Y") %>
+                        </li>
+                        <li class="list-item col-sm-1 ">
+                            <%= file.download_date.strftime("%d.%m.%Y") %>
+                        </li>
+                        <li class="list-item col-sm-1 ">
+                            <%= file.delete_date.strftime("%d.%m.%Y") %>
+                        </li>
+                           <li class="list-item col-sm-1 ">
+                                <% file.photos.each do |attachment| %>  
+                                <%= attachment.content_type.partition('/').last %>
+                            <% end %>
+                        </li>
+                        <li class="list-item col-sm-4 text-truncate">
+                            <% file.photos.each do |attachment| %>  
+                                <%= link_to attachment.filename, photo_path(file) %>
+                            <% end %>
+                        </li>
+                         <li class="list-item col-sm-1">
+                             <%= file.photos.blobs.ids %>
+                        </li>
+                </ul>
+    <% end %>
+    <%= f.submit "Download Files" %>
+    <%= button_to "Download all", folder_download_files_path(:folder_id), method: :post, data: { "no-turbolink" => true } %>
+    <% end %>
+</div>

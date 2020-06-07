@@ -33,6 +33,8 @@
         <% end%>
 </div>
 
+<%= button_to "Download all", photo_download_files_path(@photo), method: :post, data: { "no-turbolink" => true } %>
+
 <% else %>
     "Sorry, too late!" 
 <% end %>

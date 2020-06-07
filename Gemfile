@@ -19,6 +19,9 @@ gem 'turbolinks', '~> 5'
 #gem 'jbuilder', '~> 2.7'
 gem 'acts_as_tree'
 
+gem 'zip_tricks'
+# Allows streaming, non-rewinding ZIP file output from Ruby.
+
 gem 'bootstrap', '4.0.0.alpha6'
 
 # Use Redis adapter to run Action Cable in production

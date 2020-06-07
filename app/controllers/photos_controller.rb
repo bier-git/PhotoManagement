@@ -27,7 +27,7 @@ class PhotosController < ApplicationController
     end
 
     def download_image
-        @photo = Photo.find(params[:photo_id]).photos.first
+        @files = Photo.photos.p
         redirect_to @photo.service_url
         Photo.find(params[:photo_id]).update(download_date: Date.current, delete_date: (Date.current + 1.year))
     end
@@ -47,6 +47,8 @@ class PhotosController < ApplicationController
         @photo.update(download_date: Date.current, delete_date: (Date.current + 1.year))
         redirect_to "/folders"
     end
+
+    
 
     private
 

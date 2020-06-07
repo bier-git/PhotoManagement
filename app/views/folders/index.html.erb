@@ -21,8 +21,7 @@
                             <span class="badge badge-primary badge-pill">14</span>
                         </li>
                 </ul>
-    <% end %>            
-                <%= @photos = Photo.search(params[:search], params[:tag]).to_a %>
+    <% end %>        
                 <div id="back_button_index">
                     <% url = request.path_info %>
                         <% if url.include?('tags') %>

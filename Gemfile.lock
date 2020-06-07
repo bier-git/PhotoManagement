@@ -266,6 +266,7 @@ GEM
     xpath (3.2.0)
       nokogiri (~> 1.8)
     zeitwerk (2.2.2)
+    zip_tricks (5.3.0)
 
 PLATFORMS
   java
@@ -297,6 +298,7 @@ DEPENDENCIES
   web-console (>= 3.3.0)
   webdrivers
   webpacker (~> 4.0)
+  zip_tricks
 
 RUBY VERSION
    ruby 2.7.0p0
