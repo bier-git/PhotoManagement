@@ -1,1 +1,17 @@
-Edit!
+<div class="container"> 
+    <div class="row">
+        <div class="col-4">
+            <h1> Edit Folder </h1>
+                <%= form_with model: @folder, local: true, class: "nifty_form" do |f| %>
+                    <div class="form-group row">
+                        <%= f.label :name, "Name", class:'control-label' %>
+                        <%= f.text_field :name, class: "form-control" %>
+                    </div>
+                    <div class="form-group row">
+                        <%= f.submit "Update", class: "btn btn-primary btn-space" %> 
+                    </div>
+                <% end %>
+                <%= button_to "Back", folder_path(@folder.parent), method: :get, class: "btn btn-primary btn-space"%>
+        </div>
+    </div>
+</div>

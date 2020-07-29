@@ -3,7 +3,7 @@ class Photo < ApplicationRecord
     has_many_attached :photos
     has_many_attached :permissions
     has_many :taggings
-    has_many :tags, through: :taggings
+    has_many :tags, through: :taggings, dependent: :destroy
     belongs_to :photographer
 
     scope :with_tag, ->(tag) do

@@ -2,6 +2,7 @@ class ZipStreamingController < ApplicationController
     include ActionController::Live
   
     def download
+      @folder = Folder.find(params[:folder_id]) 
       @photo = Photo.joins(:photos_attachments).where(:folder_id => params[:folder_id])
       zipname = "test.zip"
       disposition = ActionDispatch::Http::ContentDisposition.format(disposition: "attachment", filename: zipname)
@@ -19,7 +20,7 @@ class ZipStreamingController < ApplicationController
 
       ZipTricks::Streamer.open(writer) do |zip|
         @photo.each do |file|
-        file.photos.where(:blob_id => params[:selected_ids].reject {|k| k == "0"}).each do |doc|
+        file.photos.where(:blob_id => params[:blob_id].reject {|k| k == "0"}).each do |doc|
           zip.write_deflated_file(doc.filename.to_s) do |file_writer|
             doc.blob.download do |chunk|
               file_writer << chunk 
