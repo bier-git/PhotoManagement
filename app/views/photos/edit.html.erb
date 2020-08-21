@@ -15,20 +15,15 @@
             <%= f.label :photographer, "Photographer", class:'control-label' %>
             <%= f.collection_select(:photographer_id, Photographer.all.order(:name), :id, :name, {include_blank: false, prompt: true}, {class: "form-control"}) %>
         </div>
-        <% @photo.photos.each do |image| %>
             <div class="row show_row">
                       <ul class="list-group">
-                        <li class="list-group-item">Image:<p> <%= file_field :image, class: "form-control-file" %><p></li>
-                        <li class="list-group-item">Blob:<p> <%= image.id %><p></li>
-                        <li class="list-group-item">File name:<p> <%= image.filename %><p></li>
-                        <li class="list-group-item">File type:<p> <%= image.content_type %></p></li>
-                        <li class="list-group-item">Uploaded:<p> <%= @photo.created_at %></p></li>
-                        <% @photo.permissions.each do |permission| %>
-                          <li class="list-group-item"><%= link_to 'Download Permission', rails_blob_path(permission, only_path: true) %></li>
-                        <% end %>
-                      </ul>
-            </div>    
-        <% end%>
+                        <li class="list-group-item">Image:<p> <%= file_field @file, class: "form-control-file" %><p></li>
+                        <li class="list-group-item">Blob:<p> <%= @file.id %><p></li>
+                        <li class="list-group-item">File name:<p> <%= @file.filename %><p></li>
+                        <li class="list-group-item">File type:<p> <%= @file.content_type %></p></li>
+                        <li class="list-group-item">Uploaded:<p> <%= @file.created_at %></p></li>
+                     </ul>
+            </div> 
         <div class="form-group row">
             <%= f.submit "Update", class: "btn btn-primary btn-space" %> 
             <%= button_to "Back", edit_photo_path(@photo), method: :get, class: "btn btn-primary btn-space"%>

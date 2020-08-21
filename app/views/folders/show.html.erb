@@ -118,7 +118,7 @@
                                         <td>
                                             <%= link_to "Delete", photo_path(file, blob_id: attachment.blob.id), data: { method: :delete } %>
                                             |
-                                            <%= link_to "Show", photo_path(file, blob_id: attachment.blob.id) %>
+                                            <%= link_to "Show", photo_path(file, blob_id: attachment.blob.id, folder_id: file.folder_id) %>
                                         </td>
 
                                 <% end %>

@@ -12,7 +12,8 @@ class PhotosController < ApplicationController
     end
 
     def edit
-        @photo = Photo.find(params[:id])
+        @file = ActiveStorage::Blob.find(params[:id])
+        @photo = Photo.find(ActiveStorage::Attachment.find_by(blob_id: params[:id]).record_id)
     end
 
     def update
