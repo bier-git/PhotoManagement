@@ -17,9 +17,10 @@ class PhotosController < ApplicationController
     end
 
     def update
-        @photo = Photo.find(params[:id])
-        @photo.update(photo_params)
-        redirect_to @photo
+        @file = ActiveStorage::Blob.find(params[:id])
+        @photo = Photo.find(ActiveStorage::Attachment.find_by(blob_id: params[:id]).record_id)
+        @photo.update(shooting_date: params[:photo][:shooting_date], tag_ids: params[:photo][:tag_ids], photographer_id: params[:photo][:photographer_id])
+        redirect_to @file
     end
 
     def destroy
