@@ -4,7 +4,6 @@ class Photo < ApplicationRecord
     has_many_attached :permissions
     has_many :taggings
     has_many :tags, through: :taggings, dependent: :destroy
-    belongs_to :photographer
 
     scope :with_tag, ->(tag) do
         joins("inner join taggings on taggings.photo_id = photos.id inner join tags on tags.id = taggings.tag_id").

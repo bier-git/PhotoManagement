@@ -10,7 +10,7 @@ class FoldersController < ApplicationController
     def show 
         @folder = Folder.find(params[:id]) 
         @sub_folders = @folder.children
-        @sub_files = @folder.photos.where(folder_id: "#{params[:id]}")
+        @sub_files = @folder.photos
     end
    
     def new
@@ -46,7 +46,28 @@ class FoldersController < ApplicationController
         end
     end
 
-    
+    def add_files
+      uploaded_filenames = []
+      params[:photos].each do |file|
+        uploaded_filenames << file.original_filename
+      end
+      if (uploaded_filenames & ActiveStorage::Blob.distinct.pluck(:filename)).length > 100
+          flash.now[:alert] = "The file(s) #{(uploaded_filenames & ActiveStorage::Blob.distinct.pluck(:filename)).join(", ")} already exist. Please only upload new files"
+          render "uploads/show", folder_id: params[:folder_id]
+      else 
+        @folder = Folder.find(params[:folder_id]) 
+        @folder.photos.attach(params[:photos])     
+        @folder.permissions.attach(params[:permissions])
+        @folder.photos.blobs.where(filename: uploaded_filenames).each do |blob|
+          blob.update(photographer_id: params[:photographer_id])
+          params[:photo][:tag_ids].each do |tag|
+            Tagging.create(tag_id: tag, blob_id: blob.id)
+          end
+        end
+        redirect_to "/"
+      end
+    end
+
     def destroy 
         @folder = Folder.find(params[:id])
         @folder.destroy
@@ -77,3 +98,4 @@ class FoldersController < ApplicationController
     end
 
 end
+

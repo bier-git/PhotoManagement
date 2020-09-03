@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_23_095855) do
+ActiveRecord::Schema.define(version: 2020_09_03_120557) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -18,9 +18,7 @@ ActiveRecord::Schema.define(version: 2020_08_23_095855) do
     t.integer "record_id", null: false
     t.integer "blob_id", null: false
     t.datetime "created_at", null: false
-    t.integer "photographer_id"
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
-    t.index ["photographer_id"], name: "index_active_storage_attachments_on_photographer_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
@@ -29,10 +27,12 @@ ActiveRecord::Schema.define(version: 2020_08_23_095855) do
     t.string "filename", null: false
     t.string "content_type"
     t.text "metadata"
-    t.bigint "byte_size", null: false
+    t.integer "byte_size", null: false
     t.string "checksum", null: false
     t.datetime "created_at", null: false
+    t.integer "photographer_id"
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+    t.index ["photographer_id"], name: "index_active_storage_blobs_on_photographer_id"
   end
 
   create_table "folders", force: :cascade do |t|
@@ -60,10 +60,10 @@ ActiveRecord::Schema.define(version: 2020_08_23_095855) do
 
   create_table "taggings", force: :cascade do |t|
     t.integer "tag_id", null: false
-    t.integer "photo_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["photo_id"], name: "index_taggings_on_photo_id"
+    t.integer "blob_id"
+    t.index ["blob_id"], name: "index_taggings_on_blob_id"
     t.index ["tag_id"], name: "index_taggings_on_tag_id"
   end
 
@@ -86,7 +86,7 @@ ActiveRecord::Schema.define(version: 2020_08_23_095855) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "active_storage_attachments", "photographers"
-  add_foreign_key "taggings", "photos"
+  add_foreign_key "active_storage_blobs", "photographers"
+  add_foreign_key "taggings", "active_storage_blobs", column: "blob_id"
   add_foreign_key "taggings", "tags"
 end

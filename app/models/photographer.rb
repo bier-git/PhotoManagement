@@ -1,3 +1,3 @@
 class Photographer < ApplicationRecord
-    has_many :photos
+    has_many :active_storage_blobs
 end

@@ -33,7 +33,7 @@
                         </td>
                         <td>
                             <span class="badge badge-primary badge-pill">
-                                <%= Folder.find(folder.id).photos.joins(:photos_attachments).count %>
+                                <%= Folder.find(folder.id).photos.count %>
                             </span>
                         </td>
                         <td>
@@ -76,7 +76,6 @@
                 <%= form_with url: folder_download_files_path(params[:id]), local: true do |f| %>                   
                             <% num = 0 %>
                             <% @sub_files.each do |file| %>
-                                <% file.photos.each do |attachment| %>  
                                     <tr>
                                         <td>
                                             <svg class="bi bi-files" width="30" height="30" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -88,22 +87,22 @@
                                             <%= num += 1 %>
                                         </th>   
                                         <td>
-                                            <%= f.check_box( "blob_id", { multiple: true }, attachment.blob.id) %>
+                                            <%= f.check_box( "blob_id", { multiple: true }, file.blob.id) %>
                                         </td>                  
                                         <td>
-                                            <%= file.created_at.strftime("%d.%m.%Y")%>
+                                            <%= file.blob.created_at.strftime("%d.%m.%Y") %>
                                         </td>
                                         <td>
-                                            <%= file.shooting_date.strftime("%d.%m.%Y") %>
+                                            <%= "file.shooting_date" %>
                                         </td>
                                         <td>
-                                            <%= file.download_date.strftime("%d.%m.%Y") %>
+                                            <%= "file.download_date" %>
                                         </td>
                                         <td>
-                                            <%= file.delete_date.strftime("%d.%m.%Y") %>
+                                            <%= "file.delete_date.strftime" %>
                                         </td>
                                         <td>
-                                            <% file.tags.each_with_index do |tag, index| %>
+                                            <% file.blob.tags.each_with_index do |tag, index| %>
                                                 <% if %>
                                                     <% (file.tags.length - 1) == index %>
                                                     <%= tag.name %>
@@ -113,31 +112,31 @@
                                             <% end %>
                                         </td>
                                         <td>
-                                            <%= attachment.content_type.partition('/').last %>
+                                            <%= file.content_type.partition('/').last %>
                                         </td>
                                         <td>
-                                            <%= link_to "Delete", photo_path(file, blob_id: attachment.blob.id), data: { method: :delete } %>
+                                            <%= link_to "Delete", folder_delete_attachment_path(file, folder_id: params[:id], blob_id: file.blob.id) %>
                                             |
-                                            <%= link_to "Show", photo_path(file, blob_id: attachment.blob.id, folder_id: file.folder_id) %>
+                                            <%= link_to "Show", folder_show_path(file, folder_id: params[:id], blob_id: file.blob.id) %>
                                         </td>
 
-                                <% end %>
                             <% end %>
                             </tr>
                                 <tr class="table-borderless">
                                     <td>
                                         <%= f.submit "Download", class: "btn btn-primary btn-space" %>
                                     </td>
+                <% end %>
                                     <td>
-                                        <%= button_to "Upload", folder_new_sub_file_path(@folder), method: :get, class: "btn btn-primary btn-space" %>
+                                        <%= button_to "Upload", folder_upload_path(@folder), method: :get, class: "btn btn-primary btn-space" %>
                                     </td>
                                 </tr>
 
-                <% end %>
+                
             <% else %>
                 <tr>
                     <td>
-                        <%= button_to "Upload", folder_new_sub_file_path(@folder), method: :get, class: "btn btn-primary btn-space" %>
+                        <%= button_to "Upload", folder_show_path(@folder), method: :get, class: "btn btn-primary btn-space" %>
                     </td>
                 </tr>
             <% end %>
