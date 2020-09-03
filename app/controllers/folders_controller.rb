@@ -10,7 +10,7 @@ class FoldersController < ApplicationController
     def show 
         @folder = Folder.find(params[:id]) 
         @sub_folders = @folder.children
-        @sub_files = @folder.photos
+        @photos = @folder.photos
     end
    
     def new

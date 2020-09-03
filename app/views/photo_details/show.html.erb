@@ -5,7 +5,7 @@
                 <div class="show_image"><%= image_tag @photo.variant(resize: "600>", quality: 75).processed %></div>
                 <div class="show_button">
                         <%= button_to 'Download Image', photo_download_image_path(@photo, blob_id: [params[:blob_id]], folder_id: params[:folder_id]), class: "btn btn-primary btn-space" %>
-                        <%= button_to 'Edit', edit_photo_path(@photo), method: :get, class: "btn btn-primary btn-space"  %>
+                        <%= button_to 'Edit', edit_folder_photo_detail_path(@photo, blob_id: params[:blob_id], folder_id: params[:folder_id]), method: :get, class: "btn btn-primary btn-space"  %>
                         <%= button_to 'Delete', @photo, method: :delete, class: "btn btn-primary btn-space"  %>
                         <%= button_to 'Back to Overview', "/", method: :get, class: "btn btn-primary btn-space"  %>
                 </div>

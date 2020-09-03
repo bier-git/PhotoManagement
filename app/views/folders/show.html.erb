@@ -71,11 +71,11 @@
                     <th scope="col">Action</th>
                 </tr>
             </thead>
-            <% if @sub_files.any? %>
+            <% if @photos.any? %>
                 <tbody>
                 <%= form_with url: folder_download_files_path(params[:id]), local: true do |f| %>                   
                             <% num = 0 %>
-                            <% @sub_files.each do |file| %>
+                            <% @photos.each do |file| %>
                                     <tr>
                                         <td>
                                             <svg class="bi bi-files" width="30" height="30" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -117,7 +117,7 @@
                                         <td>
                                             <%= link_to "Delete", folder_delete_attachment_path(file, folder_id: params[:id], blob_id: file.blob.id) %>
                                             |
-                                            <%= link_to "Show", folder_show_path(file, folder_id: params[:id], blob_id: file.blob.id) %>
+                                            <%= link_to "Show", folder_photo_detail_path(file, folder_id: params[:id], blob_id: file.blob.id) %>
                                         </td>
 
                             <% end %>
