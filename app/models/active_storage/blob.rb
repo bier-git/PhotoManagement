@@ -34,11 +34,11 @@ class ActiveStorage::Blob < ActiveRecord::Base
 
   class_attribute :service
 
+  has_one :photographer
   has_many :attachments
   has_many :taggings, dependent: :destroy
   has_many :tags, :through => :taggings 
-  belongs_to :photographer
-
+  
   scope :unattached, -> { left_joins(:attachments).where(ActiveStorage::Attachment.table_name => { blob_id: nil }) }
 
   before_destroy(prepend: true) do
