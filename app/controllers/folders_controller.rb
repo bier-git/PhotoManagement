@@ -4,7 +4,11 @@ class FoldersController < ApplicationController
     include ZipTricks::RailsStreaming
 
     def index 
+        if params[:search]
+            redirect_to search_path(search: params[:search])
+        else
         @folders = Folder.roots
+        end
     end
       
     def show 

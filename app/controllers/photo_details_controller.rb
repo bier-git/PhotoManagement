@@ -4,12 +4,6 @@ class PhotoDetailsController < ApplicationController
         @photo = ActiveStorage::Blob.find(params[:blob_id])
     end
 
-    def delete_attachment
-        raise params.inspect
-        ActiveStorage::Attachment.find_by(:blob_id => params[:blob_id]).purge
-        redirect_to "/folders/#{params[:folder_id]}"
-    end
-
     def edit
        @photo = ActiveStorage::Blob.find(params[:id])
     end
@@ -25,7 +19,11 @@ class PhotoDetailsController < ApplicationController
             @photo.tags.destroy_all
             @photo.tags << Tag.where(id: params[:tag_ids].reject {|k| k == ""})
         end 
-        redirect_to "/folders/1"
+        redirect_to  folder_photo_detail_path(@photo)
+    end
+
+    def search
+        @photos = ActiveStorage::Blob.all.search(params[:search], params[:tag]).includes(:tags)
     end
 
 end

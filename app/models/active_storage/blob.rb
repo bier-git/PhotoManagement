@@ -41,6 +41,16 @@ class ActiveStorage::Blob < ActiveRecord::Base
   
   scope :unattached, -> { left_joins(:attachments).where(ActiveStorage::Attachment.table_name => { blob_id: nil }) }
 
+  scope :with_tag, ->(tag) do
+    joins("inner join taggings on taggings.blob_id = active_storage_blobs.id inner join tags on tags.id = taggings.tag_id").
+    where("lower(tags.name) LIKE ?", "%#{tag.downcase}%")
+  end
+
+  scope :with_photographer, ->(photographer) do
+      joins("inner join photographers on photographers.id= photographer_id").
+      where("lower(photographers.name) LIKE ?", "%#{photographer.downcase}%")
+  end
+
   before_destroy(prepend: true) do
     raise ActiveRecord::InvalidForeignKey if attachments.exists?
   end
@@ -288,6 +298,20 @@ class ActiveStorage::Blob < ActiveRecord::Base
       else
         { content_type: content_type }
       end
+    end
+
+    def self.search(search, tag)
+      @photos = ActiveStorage::Blob.all
+      if search
+          if @photos.with_photographer(search).exists?
+                  @photos = @photos.with_photographer(search)
+          elsif @photos.with_tag(search).exists?
+                  @photos = @photos.with_tag(search)
+          else  @photos = @photos.where("cast(strftime('%Y', shooting_date) as int) = ?", "#{search}")                
+          end
+      end
+      @photos = @photos.with_tag(tag).includes(:tags) if tag
+      @photos
     end
 end
 

@@ -16,7 +16,7 @@
         <div class="collapse navbar-collapse">
             <div class="navbar-center">
             <form class="form-inline">
-              <%= form_tag "/", method: "get", class: "form-control mr-sm-2" do %> 
+              <%= form_tag search_path, method: "get", class: "form-control mr-sm-2" do %> 
               <%= text_field_tag :search, params[:search], id: "searchfield" %>
               <%= submit_tag("Search", name: nil, class: "btn btn-outline-light my-2 my-sm-0 btn-space") %>
               <% end %>
@@ -24,7 +24,6 @@
             </div>
           <div class="d-flex align-items-start">
           <%= link_to "Home", "/", class: "btn btn-outline-light btn-space"%>
-           <%= link_to "Upload", new_photo_path, class: "btn btn-outline-light btn-space"%>
             <div class="nav-item dropdown">
                 <a class="btn btn-outline-light dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
                   Filter by Topic

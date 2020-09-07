@@ -1,0 +1,31 @@
+        <div class="container"> 
+            <div class="col-4">
+            <h1>Photos</h1>
+            </div>
+                <div class="card-deck">
+                    <% @photos.each do |image| %>
+                            <div class="col-4 d-flex align-items-stretch">
+                                <div class="card show_row">  
+                                    <%= link_to (image_tag image.variant(resize: "50%", quality: 75).processed, class: "card-img-top"),  folder_photo_detail_path(image, folder_id: 2, blob_id: image.id) %>
+                                    <div class="card-body">
+                                        <p class="card-text">Shooting date: <%= image.shooting_date if image.shooting_date%></p>
+                                        <p class="card-text">Deletion date: <%= image.deletion_date if image.deletion_date%></p>
+                                        <p>Tags: <%= raw image.tags.map(&:name).map { |t| link_to t, tag_path(t) }.join(', ') %></p>
+                                    </div>
+                                </div>
+                            </div>                
+                    <% end %>
+                </div>
+            <div id="back_button_index">
+                <% url = request.path_info %>
+                    <% if url.include?('tags') %>
+                        <%= button_to "Back to Overview", "/", method: :get, class: "btn btn-primary"%>
+                    <% end %>
+            </div>
+        </div>
+
+        <%# image.attachments.find_by(blob_id: image.id).record_id %>
+
+
+ 
+   
