@@ -6,8 +6,8 @@
                 <div class="show_button">
                         <%= button_to 'Download Image', photo_download_image_path(@photo, blob_id: [params[:blob_id]], folder_id: params[:folder_id]), class: "btn btn-primary btn-space" %>
                         <%= button_to 'Edit', edit_folder_photo_detail_path(@photo, blob_id: params[:blob_id], folder_id: params[:folder_id]), method: :get, class: "btn btn-primary btn-space"  %>
-                        <%= button_to 'Delete', @photo, method: :delete, class: "btn btn-primary btn-space"  %>
-                        <%= button_to 'Back to Overview', "/", method: :get, class: "btn btn-primary btn-space"  %>
+                        <%= button_to 'Delete',  folder_delete_attachment_path(blob_id: @photo.id, folder_id: params[:folder_id]), method: :get, class: "btn btn-primary btn-space"  %>
+                        <%= button_to 'Back to Overview', "/folders/#{params[:folder_id]}", method: :get, class: "btn btn-primary btn-space"  %>
                 </div>
             </div>  
             <div class="col-lg">
@@ -18,7 +18,7 @@
                             <path fill-rule="evenodd" d="M8 11a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zm0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
                             <path d="M3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"/>
                         </svg> 
-                        <%= "shooting_date" %>
+                        <%= @photo.shooting_date %>
                     </li>
                     <li class="list-group-item">
                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -65,14 +65,32 @@
                             <path fill-rule="evenodd" d="M5.646 9.146a.5.5 0 0 1 .708 0L8 10.793l1.646-1.647a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 0-.708z"/>
                             <path fill-rule="evenodd" d="M8 6a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0v-4A.5.5 0 0 1 8 6z"/>
                         </svg>
-                        <%= "download_date" %>
+                        <%= @photo.download_date.to_date if @photo.download_date %>
                     </li>
                     <li class="list-group-item">
                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                             <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
                         </svg>
-                        <%= "delete_date" %>
+                        <%= @photo.deletion_date.to_date if @photo.deletion_date %>
+                    </li>
+                    <li class="list-group-item">
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-tags" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M3 2v4.586l7 7L14.586 9l-7-7H3zM2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2z"/>
+                        <path fill-rule="evenodd" d="M5.5 5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1zm0 1a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                        <path d="M1 7.086a1 1 0 0 0 .293.707L8.75 15.25l-.043.043a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 0 7.586V3a1 1 0 0 1 1-1v5.086z"/>
+                        </svg>
+                        <% if %>
+                            <% @photo.tags %>
+                                <% @photo.tags.each_with_index do |tag, index|  %>
+                                    <% if %>
+                                        <% (@photo.tags.length - 1) == index %>
+                                        <%= tag.name %>
+                                    <% else %>
+                                        <%= tag.name + ","%>
+                                    <% end %>
+                                <% end %>
+                        <% end %>
                     </li>
                 </ul>
             </div>

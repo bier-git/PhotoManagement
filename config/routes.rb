@@ -16,8 +16,11 @@ Rails.application.routes.draw do
     post "/download_files", to: "zip_streaming#download" , :as => "download_files" #for download a selection of files
     get "/uploads", to: "uploads#show", :as => "upload"
     post "/uploads", to: "folders#add_files", :as => "add_files"
+    get "/delete_attachment/:blob_id", to: "folders#delete_attachment", :as => "delete_attachment" 
       resources :photo_details
-        get "/delete_attachment", to: "photo_details#delete_attachment", :as => "delete_attachment" 
   end
+
+  
+
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end 

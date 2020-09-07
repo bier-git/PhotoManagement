@@ -93,13 +93,13 @@
                                             <%= file.blob.created_at.strftime("%d.%m.%Y") %>
                                         </td>
                                         <td>
-                                            <%= "file.shooting_date" %>
+                                            <%= file.blob.shooting_date.strftime("%d.%m.%Y") if  file.blob.shooting_date %>
                                         </td>
                                         <td>
-                                            <%= "file.download_date" %>
+                                            <%= file.blob.download_date.strftime("%d.%m.%Y") if  file.blob.download_date %>
                                         </td>
                                         <td>
-                                            <%= "file.delete_date.strftime" %>
+                                            <%= file.blob.deletion_date.strftime("%d.%m.%Y") if file.blob.deletion_date%>
                                         </td>
                                         <td>
                                             <% file.blob.tags.each_with_index do |tag, index| %>
@@ -136,7 +136,7 @@
             <% else %>
                 <tr>
                     <td>
-                        <%= button_to "Upload", folder_show_path(@folder), method: :get, class: "btn btn-primary btn-space" %>
+                        <%= button_to "Upload",  folder_upload_path(@folder), method: :get, class: "btn btn-primary btn-space" %>
                     </td>
                 </tr>
             <% end %>

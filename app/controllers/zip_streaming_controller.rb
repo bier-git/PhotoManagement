@@ -18,7 +18,8 @@ class ZipStreamingController < ApplicationController
       end
 
       ZipTricks::Streamer.open(writer) do |zip|
-        @folder.photos.blobs.where(:id => params[:blob_id].reject {|k| k == "0"}).each do |doc|
+        @folder.photos.blobs.where(id: params[:blob_id].reject {|k| k == "0"}).each do |doc|
+          doc.update(download_date: Date.current, deletion_date: (Date.current + 1.year))
           zip.write_deflated_file(doc.filename.to_s) do |file_writer|
             doc.download do |chunk|
               file_writer << chunk 

@@ -1,4 +1,4 @@
 class Tag < ApplicationRecord
     has_many :taggings
-    has_many :active_storage_blobs, :through => :taggings
+    has_many :blobs, :through => :taggings,  class_name: 'ActiveStorage::Blob'
 end

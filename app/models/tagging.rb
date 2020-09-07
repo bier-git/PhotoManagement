@@ -1,4 +1,4 @@
 class Tagging < ApplicationRecord
-  belongs_to :tag
-  belongs_to :active_storage_blob
+  belongs_to :tag, inverse_of: :taggings
+  belongs_to :blob, class_name: 'ActiveStorage::Blob'
 end

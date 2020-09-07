@@ -59,13 +59,16 @@ class FoldersController < ApplicationController
         @folder.photos.attach(params[:photos])     
         @folder.permissions.attach(params[:permissions])
         @folder.photos.blobs.where(filename: uploaded_filenames).each do |blob|
-          blob.update(photographer_id: params[:photographer_id])
-          params[:photo][:tag_ids].each do |tag|
-            Tagging.create(tag_id: tag, blob_id: blob.id)
-          end
+          blob.update(photographer_id: params[:photographer_id], shooting_date: params[:shooting_date])
+          blob.tags << Tag.where(id: params[:photo][:tag_ids].reject {|k| k == ""})
         end
-        redirect_to "/"
+        redirect_to folder_path(@folder)
       end
+    end
+
+    def delete_attachment
+      ActiveStorage::Attachment.find_by(:blob_id => params[:blob_id]).purge
+      redirect_to "/folders/#{params[:folder_id]}"
     end
 
     def destroy 

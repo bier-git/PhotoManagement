@@ -1,3 +1,3 @@
 class Photographer < ApplicationRecord
-    has_many :active_storage_blobs
+    has_many :blobs,  class_name: 'ActiveStorage::Blob'
 end

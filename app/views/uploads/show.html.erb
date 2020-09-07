@@ -7,6 +7,11 @@
       <%= form_with model: @folder, local: true, class: "nifty_form" do |f| %>
 
         <div class="form-group row">
+            <%= f.label :tag, "Select Date of the Shooting", class:'control-label' %>
+            <%= f.date_field :shooting_date, class: "form-control" %>
+        </div>
+
+        <div class="form-group row">
             <%= f.label :tag, "Select tags for the images", class:'control-label' %>
             <%= collection_select(:photo, :tag_ids, Tag.all.order(:name), :id, :name, {multiple: true}, {multiple: true, class: "form-control"}) %>
         </div>
@@ -28,7 +33,7 @@
 
         <div class="form-group row">
             <%= f.hidden_field :folder_id, :value => params[:folder_id] %> 
-            <%= f.submit "Update", class: "btn btn-primary" %> 
+            <%= f.submit "Upload", class: "btn btn-primary" %> 
         </div>
       </div>
     <% end %>
