@@ -24,15 +24,16 @@ class FoldersController < ApplicationController
     def create 
         @folder = Folder.new(folder_params)
         if @folder.save 
-         flash[:notice] = "Successfully created folder."
-           
-         if @folder.parent #checking if we have a parent folder on this one 
-           redirect_to @folder.parent  #then we redirect to the parent folder 
-         else
-           redirect_to @folder #if not, redirect back to home page 
-         end
+            if @folder.parent #checking if we have a parent folder on this one 
+              redirect_to @folder.parent  #then we redirect to the parent folder 
+              flash[:notice] = "Successfully created folder" 
+            else
+              redirect_to @folder #if not, redirect back to home page 
+              flash[:notice] = "Successfully created folder" 
+            end
         else
-         render :action => 'new'
+          flash[:alert] = "Folder could not be created" 
+          render :action => 'new'
         end
      end
       
