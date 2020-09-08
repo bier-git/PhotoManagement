@@ -3,10 +3,10 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: pm_development
+  database: blog_development
   pool: 5
-  username: Acme2020
-  password: 123456
+  username: blog
+  password: blurp
   host: localhost
 
 # Warning: The database defined as "test" will be erased and
@@ -15,17 +15,17 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  database: pm_test
+  database: blog_test
   pool: 5
-  username: Acme2020
-  password: 123456
+  username: blog
+  password: blurp
   host: localhost
 
 production:
   adapter: postgresql
   encoding: unicode
-  database: pm_production
+  database: blog_production
   pool: 5
-  username: Acme2020
-  password: 123456
+  username: blog
+  password: blurp
   host: localhost

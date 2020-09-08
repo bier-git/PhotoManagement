@@ -22,6 +22,10 @@ gem 'acts_as_tree'
 gem 'zip_tricks'
 # Allows streaming, non-rewinding ZIP file output from Ruby.
 
+gem 'yaml_db'
+
+gem 'pg'
+
 gem 'bootstrap', '4.0.0.alpha6'
 
 # Use Redis adapter to run Action Cable in production
@@ -40,7 +44,8 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem "pry-rails"
   # Use sqlite3 as the database for Active Record
-  gem 'sqlite3', '~> 1.4'
+  # gem 'sqlite3', '~> 1.4'
+  gem 'pg'
 end
 
 group :production do
