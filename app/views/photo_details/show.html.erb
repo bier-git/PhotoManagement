@@ -108,15 +108,15 @@
             </thead>
             <tbody>
                 <% num = 0 %>
-                <% "@meta_data.permissions.each do |permission|" %>
+                <% @permissions.each do |permission| %>
                     <tr>
                         <th scope="row"><%= num += 1 %></th>
-                        <td><%= "permission.created_at.to_date" %></td>
+                        <td><%= permission.created_at.to_date %></td>
                         <td>All</td>
                         <td>Pictures and real name</td>
-                        <td><%= link_to 'Show', rails_blob_path(@photo, only_path: true) %></td>
+                        <td><%= link_to 'Show',  polymorphic_path(permission) %></td>
                     </tr>
-                <% "end" %>
+                <% end %>   
             </tbody>
         </table>
 </div>

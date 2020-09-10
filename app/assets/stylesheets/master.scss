@@ -21,6 +21,7 @@
 }
 
 .btn-space {
+    margin-bottom: 15px;
     margin-right: 5px;
     margin-left: 5px;
 }
@@ -36,6 +37,11 @@
     transform: translatex(-50%);
 }
 
+.btn-nav-bar {
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
 #searchfield {
     width: 300px;
 }
@@ -46,12 +52,6 @@
 
 .dropdown-item {
     padding-left: 5px;
-}
-
-#back_button_index {
-    padding-top: 45px;
-    display: flex;
-    justify-content: center;
 }
 
 .dropdown_nav_style {
@@ -74,4 +74,8 @@ h1 {
 
 .download-text{
     display: block
+}
+
+.new-folder{
+    margin-bottom: 15px;
 }

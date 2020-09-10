@@ -2,6 +2,10 @@ class PhotoDetailsController < ApplicationController
 
     def show    
         @photo = ActiveStorage::Blob.find(params[:blob_id])
+        @permissions = []
+        ActiveStorage::Blob.find(params[:blob_id]).permissions.each do |permission|
+            @permissions << ActiveStorage::Attachment.find(permission.attachment_id).blob
+        end
     end
 
     def edit
@@ -21,9 +25,4 @@ class PhotoDetailsController < ApplicationController
         end 
         redirect_to  folder_photo_detail_path(@photo)
     end
-
-    def search
-        @photos = ActiveStorage::Blob.all.search(params[:search], params[:tag]).includes(:tags)
-    end
-
 end

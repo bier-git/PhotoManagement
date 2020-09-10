@@ -10,6 +10,7 @@ class ActiveStorage::Attachment < ActiveRecord::Base
 
   belongs_to :record, polymorphic: true, touch: true
   belongs_to :blob, class_name: "ActiveStorage::Blob"
+  has_many :permissions, dependent: :destroy
 
   delegate_missing_to :blob
 

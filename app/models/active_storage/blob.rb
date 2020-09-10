@@ -38,6 +38,7 @@ class ActiveStorage::Blob < ActiveRecord::Base
   has_many :attachments
   has_many :taggings, dependent: :destroy
   has_many :tags, :through => :taggings 
+  has_many :permissions, dependent: :destroy
   
   scope :unattached, -> { left_joins(:attachments).where(ActiveStorage::Attachment.table_name => { blob_id: nil }) }
 
@@ -307,7 +308,8 @@ class ActiveStorage::Blob < ActiveRecord::Base
                   @photos = @photos.with_photographer(search)
           elsif @photos.with_tag(search).exists?
                   @photos = @photos.with_tag(search)
-          else  @photos = @photos.where("cast(strftime('%Y', shooting_date) as int) = ?", "#{search}")                
+          else
+            @photos = @photos.where("trim(to_char(shooting_date, 'YYYY')) = ?", search)               
           end
       end
       @photos = @photos.with_tag(tag).includes(:tags) if tag

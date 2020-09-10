@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_04_141313) do
+ActiveRecord::Schema.define(version: 2020_09_09_172608) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -43,6 +46,13 @@ ActiveRecord::Schema.define(version: 2020_09_04_141313) do
     t.integer "parent_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "permissions", force: :cascade do |t|
+    t.bigint "attachment_id", null: false
+    t.bigint "blob_id", null: false
+    t.index ["attachment_id"], name: "index_permissions_on_attachment_id"
+    t.index ["blob_id"], name: "index_permissions_on_blob_id"
   end
 
   create_table "photographers", force: :cascade do |t|
@@ -90,6 +100,8 @@ ActiveRecord::Schema.define(version: 2020_09_04_141313) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_blobs", "photographers"
+  add_foreign_key "permissions", "active_storage_attachments", column: "attachment_id"
+  add_foreign_key "permissions", "active_storage_blobs", column: "blob_id"
   add_foreign_key "taggings", "active_storage_blobs", column: "blob_id"
   add_foreign_key "taggings", "tags"
 end

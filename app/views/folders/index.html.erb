@@ -1,31 +1,54 @@
 <div class="container"> 
-    <div class="col-4">
-        <h1>Folder</h1>
-    </div>                   
-    <% @folders.each do |folder| %>
-            <ul class="list-unstyled row">
-                        <li class="list-item col-sm-1">
+    <h1>Folders</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Created</th>
+                    <th scope="col">Files</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% num = 0 %>
+                <% @folders.each do |folder| %>
+                    <tr>
+                        <td>
                             <svg class="bi bi-folder-symlink" width="30" height="30" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M9.828 4a3 3 0 01-2.12-.879l-.83-.828A1 1 0 006.173 2H2.5a1 1 0 00-1 .981L1.546 4h-1L.5 3a2 2 0 012-2h3.672a2 2 0 011.414.586l.828.828A2 2 0 009.828 3v1z"/>
                                 <path fill-rule="evenodd" d="M13.81 4H2.19a1 1 0 00-.996 1.09l.637 7a1 1 0 00.995.91h10.348a1 1 0 00.995-.91l.637-7A1 1 0 0013.81 4zM2.19 3A2 2 0 00.198 5.181l.637 7A2 2 0 002.826 14h10.348a2 2 0 001.991-1.819l.637-7A2 2 0 0013.81 3H2.19z" clip-rule="evenodd"/>
                                 <path d="M8.616 10.24l3.182-1.969a.443.443 0 000-.742l-3.182-1.97c-.27-.166-.616.036-.616.372V6.7c-.857 0-3.429 0-4 4.8 1.429-2.7 4-2.4 4-2.4v.769c0 .336.346.538.616.371z"/>
                             </svg>
-                        </li>
-                        <li class="list-item col-sm-3">
+                        </td>
+                        <th scope="row">
+                            <%= num += 1 %>
+                        </th>  
+                        <td>
                             <%= link_to folder.name, folder_path(folder) %>
-                        </li>
-                        <li class="list-item col-sm-3">
-                            <%= "Erstellt: #{folder.created_at.strftime("%d.%m.%Y")}" %>
-                        </li>
-                        <li class="list-item col-sm-3">
-                            <span class="badge badge-primary badge-pill">14</span>
-                        </li>
-                </ul>
-    <% end %>        
-                <div id="back_button_index">
-                    <% url = request.path_info %>
-                        <% if url.include?('tags') %>
-                            <%= button_to "Back to Overview", "/", method: :get, class: "btn btn-primary"%>
+                        </td>
+                        <td>
+                            <%= folder.created_at.strftime("%d.%m.%Y") %>
+                        </td>
+                        <td>
+                            <span class="badge badge-primary badge-pill">
+                                <%= Folder.find(folder.id).photos.count %>
+                            </span>
+                        </td>
+                        <td>
+                            <%= link_to "Rename", edit_folder_path(folder, index: true)  %>
+                            | 
+                            <%= link_to "Delete", folder_path(folder), data: { method: :delete } %>
+                        </td>
+                    </tr>
                 <% end %>
+                    <tr class="table-borderless">
+                        <td>
+                             <%= button_to "New Folder", new_folder_path, method: :get, class: "btn btn-primary btn-space", params: { index: true }  %>  
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
 </div>
 

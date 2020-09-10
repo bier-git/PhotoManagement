@@ -4,11 +4,7 @@ class FoldersController < ApplicationController
     include ZipTricks::RailsStreaming
 
     def index 
-        if params[:search]
-            redirect_to search_path(search: params[:search])
-        else
         @folders = Folder.roots
-        end
     end
       
     def show 
@@ -19,23 +15,23 @@ class FoldersController < ApplicationController
    
     def new
         @folder = Folder.new
-     end
+    end
 
-    def create 
+    def create
         @folder = Folder.new(folder_params)
         if @folder.save 
-            if @folder.parent #checking if we have a parent folder on this one 
-              redirect_to @folder.parent  #then we redirect to the parent folder 
-              flash[:notice] = "Successfully created folder" 
+            if params[:folder][:index_referrer]  #checking if the request comes from the index pages 
+              redirect_to action: "index"
+            elsif @folder.parent #checking if we have a parent folder on this one 
+                redirect_to @folder.parent  #then we redirect to the parent folder 
             else
-              redirect_to @folder #if not, redirect back to home page 
-              flash[:notice] = "Successfully created folder" 
+              redirect_to @folder #if not, redirect back to the folder that just has been created
             end
         else
           flash[:alert] = "Folder could not be created" 
           render :action => 'new'
         end
-     end
+    end
       
     def edit 
         @folder = Folder.find(params[:id]) 
@@ -44,29 +40,39 @@ class FoldersController < ApplicationController
     def update 
         @folder = Folder.find(params[:id]) 
         @folder.update(folder_params)
-        if @folder.parent #checking if we have a parent folder on this one 
-          redirect_to folder_path(@folder.parent) #then we redirect to the parent folder 
+        if params[:folder][:index_referrer] #checking if the request comes from the index pages 
+          redirect_to action: "index"
+        elsif @folder.parent #checking if we have a parent folder on this one 
+            redirect_to @folder.parent  #then we redirect to the parent folder 
         else
-          redirect_to folder_path(@folder) #if not, redirect back to home page 
+          redirect_to @folder #if not, redirect back to the folder that just has been created
         end
     end
 
     def add_files
-      uploaded_filenames = []
+      uploaded_photonames = []
       params[:photos].each do |file|
-        uploaded_filenames << file.original_filename
+        uploaded_photonames << file.original_filename
       end
-      if (uploaded_filenames & ActiveStorage::Blob.distinct.pluck(:filename)).length > 100
-          flash.now[:alert] = "The file(s) #{(uploaded_filenames & ActiveStorage::Blob.distinct.pluck(:filename)).join(", ")} already exist. Please only upload new files"
+      uploaded_permissionnames = []
+      params[:permissions].each do |file|
+        uploaded_permissionnames << file.original_filename
+      end
+      if (uploaded_photonames & ActiveStorage::Blob.distinct.pluck(:filename)).length > 0
+          flash.now[:alert] = "The file(s) #{(uploaded_photonames & ActiveStorage::Blob.distinct.pluck(:filename)).join(", ")} already exist. Please only upload new files"
           render "uploads/show", folder_id: params[:folder_id]
       else 
         @folder = Folder.find(params[:folder_id]) 
         @folder.photos.attach(params[:photos])     
         @folder.permissions.attach(params[:permissions])
-        @folder.photos.blobs.where(filename: uploaded_filenames).each do |blob|
+        @folder.photos.blobs.where(filename: uploaded_photonames).each do |blob|
           blob.update(photographer_id: params[:photographer_id], shooting_date: params[:shooting_date])
+          blob.update(deletion_date: (blob.shooting_date + 1.year))
           blob.tags << Tag.where(id: params[:photo][:tag_ids].reject {|k| k == ""})
-        end
+            @folder.permissions.last(uploaded_permissionnames.length).each do |permission|
+                Permission.create(attachment_id: permission.id, blob_id: blob.id).errors.full_messages
+            end
+          end
         redirect_to folder_path(@folder)
       end
     end
@@ -102,7 +108,7 @@ class FoldersController < ApplicationController
     private
 
     def folder_params
-        params.require(:folder).permit(:name, :parent_id)
+        params.require(:folder).permit(:name, :parent_id, :index_referrer)
     end
 
 end

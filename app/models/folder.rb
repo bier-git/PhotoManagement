@@ -2,6 +2,7 @@ class Folder < ApplicationRecord
     acts_as_tree
     has_many_attached :photos
     has_many_attached :permissions
+    attr_accessor :index_referrer
 
   
     def self.tag_counts
@@ -17,6 +18,4 @@ class Folder < ApplicationRecord
           Tag.where(name: n.strip).first_or_create!
         end
     end
-
-
 end

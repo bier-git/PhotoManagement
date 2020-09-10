@@ -8,8 +8,9 @@ Rails.application.routes.draw do
     get "/delete_attachment", to: "photos#delete_attachment", :as => "delete_attachment" 
   end 
 
-  get 'tags/:tag', to: 'photos#index', as: :tag
-  get "/search", to: "photo_details#search", :as => "search"
+  get 'tags/:tag', to: 'search#index', as: :tag
+
+  resources :search, only: [:index]
 
   resources :folders do
     get "/new_sub_folder", to: "folders#new", :as => "new_sub_folder" #for creating folders insiide another folder
