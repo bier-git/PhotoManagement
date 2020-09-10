@@ -10,6 +10,7 @@ class PhotoDetailsController < ApplicationController
 
     def edit
        @photo = ActiveStorage::Blob.find(params[:id])
+       session[:return_to] ||= request.referer
     end
 
     def update
