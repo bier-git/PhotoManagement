@@ -28,7 +28,7 @@ gem 'pg'
 
 gem "aws-sdk-s3", require: false
 
-gem 'bootstrap', '4.0.0.alpha6'
+gem 'bootstrap', '4.3.1'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
