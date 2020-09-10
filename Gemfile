@@ -28,8 +28,6 @@ gem 'pg'
 
 gem 'bootstrap', '4.0.0.alpha6'
 
-gem 'dotenv-rails', groups: [:development, :test]
-
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
@@ -45,6 +43,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem "pry-rails"
+  gem 'dotenv-rails'
   # Use sqlite3 as the database for Active Record
   # gem 'sqlite3', '~> 1.4'
   gem 'pg'
