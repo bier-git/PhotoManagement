@@ -5,7 +5,7 @@
                     <%= form_with model: @folder, local: true, class: "nifty_form" do |f| %>
                         <div class="form-group row">
                             <%= f.label :name, "Name", class:'control-label' %>
-                            <%= f.text_field :name, required: true, class: "new-folder form-control" %>
+                            <%= f.text_field :name, required: true, class: "user-input form-control" %>
                             <%= f.hidden_field :parent_id, :value => params[:folder_id] %>
                                 <% if %>
                                     <% params[:index] %>
