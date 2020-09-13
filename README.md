@@ -62,7 +62,7 @@ In work environments where different people need to work with photos eg. for PR 
         <li> Allow users to create own tags </li>
         <li> Allow certain users to create photographers with corresponding contact data </li>
         <li> Allow users to add and edit meta data to permissions </li>
-        <li> Rediesgn / make more appealing show page of photos  </li>
+        <li> Redesign / make more appealing show page of photos  </li>
     </ul>
 
 
