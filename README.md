@@ -50,7 +50,7 @@ In work environments where different people need to work with photos eg. for PR 
         <li> Improve eager loading / optimize database access </li>
         <li> Simplify permission table structure </li>
         <li> Optimize responsivness of navigation bar </li>
-        <li> Enhance search functionality or implement external one </li>
+        <li> Enhance search functionality or implement external engine </li>
         <li> Make URLs more speaking </li>
     </ul>
 
