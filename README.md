@@ -24,7 +24,7 @@ In work environments where different people need to work with photos eg. for PR 
         <li> Flexible folder/file system to cover different needs </li>
     </ul>
 
-<h2> Implmentation </h2>
+<h2> Implementation </h2>
     <ul>
         <li> Web App </li>
         <li> Ruby (2.7.0) on Rails (6.0.3.3) </li>
