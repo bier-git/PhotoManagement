@@ -39,7 +39,7 @@
 
 .btn-nav-bar {
     margin-right: 5px;
-    margin-left: 15px;
+    margin-left: 15 px;
 }
 
 #searchfield {
@@ -79,3 +79,13 @@ h1 {
 .user-input{
     margin-bottom: 15px;
 }
+
+.breadcrumbs { 
+    margin:10px 0; 
+    font-weight:bold; 
+ } 
+ 
+ .breadcrumbs a { 
+    color:#1D96EF; 
+    text-decoration:none; 
+ }

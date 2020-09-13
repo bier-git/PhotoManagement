@@ -93,18 +93,18 @@ class FoldersController < ApplicationController
     end
 
     def browse 
-        #get the folders owned/created by the current_user 
-        @current_folder = Folder.find(params[:folder_id])   
-      
-        if @current_folder
-        
-          #getting the folders which are inside this @current_folder 
-          @folders = @current_folder.children 
-          
-          render :action => "index"
-        end
-    end
+      #get the folders owned/created by the current_user 
+      @current_folder = Folder.find(params[:folder_id])   
     
+      if @current_folder
+      
+        #getting the folders which are inside this @current_folder 
+        @folders = @current_folder.children 
+        
+        render :action => "index"
+      end
+    end
+
     private
 
     def folder_params

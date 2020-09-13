@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     get "/uploads", to: "uploads#show", :as => "upload"
     post "/uploads", to: "folders#add_files", :as => "add_files"
     get "/delete_attachment/:blob_id", to: "folders#delete_attachment", :as => "delete_attachment" 
+    get "", to: "folders#browse", :as => "browse"
       resources :photo_details
   end
 end
