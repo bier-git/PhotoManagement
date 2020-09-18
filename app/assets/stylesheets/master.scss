@@ -37,11 +37,6 @@
     transform: translatex(-50%);
 }
 
-.btn-nav-bar {
-    margin-right: 5px;
-    margin-left: 15 px;
-}
-
 #searchfield {
     width: 300px;
 }
@@ -81,11 +76,10 @@ h1 {
 }
 
 .breadcrumbs { 
-    margin:10px 0; 
+    margin-top:40px; 
     font-weight:bold; 
  } 
- 
- .breadcrumbs a { 
-    color:#1D96EF; 
-    text-decoration:none; 
- }
+
+ #logo {
+    margin-right: 15px;
+}

@@ -2,8 +2,9 @@ class ZipStreamingController < ApplicationController
     include ActionController::Live
   
     def download
+
       @folder = Folder.find(params[:folder_id]) 
-      zipname = "test.zip"
+      zipname = "#{@folder.name}.zip"
       disposition = ActionDispatch::Http::ContentDisposition.format(disposition: "attachment", filename: zipname)
   
       response.headers["Content-Disposition"] = disposition
@@ -23,11 +24,20 @@ class ZipStreamingController < ApplicationController
           zip.write_deflated_file(doc.filename.to_s) do |file_writer|
             doc.download do |chunk|
               file_writer << chunk 
+
             end
+
           end
+
         end
+
       end
+      
     ensure
       response.stream.close
+
     end
+
+
+
   end
