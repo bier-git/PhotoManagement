@@ -57,7 +57,6 @@ In work environments where different people need to work with photos eg. for PR 
 
 <h3> Features </h3>
     <ul>
-        <li> Breadcrumbs  </li>
         <li> Implement user rights concept </li>
         <li> Allow users to create own tags </li>
         <li> Allow certain users to create photographers with corresponding contact data </li>
